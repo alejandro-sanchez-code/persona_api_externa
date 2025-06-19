@@ -53,7 +53,7 @@ public class RandomController {
     }
 
     @GetMapping("/listar/{id}")
-    public ResultResponse listar(@PathVariable Integer id) {
+    public ResultResponse listar(@PathVariable String id) {
         return randomService.buscarPorId(id);
     }
 
