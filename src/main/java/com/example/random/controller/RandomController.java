@@ -71,5 +71,6 @@ public class RandomController {
     @GetMapping("/filtrar/{edad}")
     public List<ResultResponse> buscarPorEdad(@PathVariable Integer edad) {
         return randomService.listarPorEdad(edad);
+
     }
 }
