@@ -25,6 +25,4 @@ public class ResultResponse {
     private String username;
     private String clave;
     private String zonaHoraria;
-
-    private String valorNuevo;
 }
