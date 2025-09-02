@@ -42,7 +42,7 @@ public class RandomService {
         return resultRepository.save(resultResponse);
     }
 
-    public ResultResponse buscarPorId(Integer id){
+    public ResultResponse buscarPorId(String  id){
         return resultRepository.findById(id).orElse(null);
     }
     public List<ResultResponse> listarTodo (){

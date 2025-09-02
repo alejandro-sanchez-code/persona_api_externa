@@ -1,14 +1,15 @@
 package com.example.random.dto.response;
 
-import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Table(name = "usuarios_random")
-@Entity
+
+
+@Document(collection = "personas")
 public class ResultResponse {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     private String nombre;
     private String genero;

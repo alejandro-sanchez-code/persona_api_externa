@@ -1,7 +1,5 @@
 package com.example.random.dto.response;
 
-import com.example.random.dto.Results;
-
 import java.util.List;
 
 public class RandomResponse {
