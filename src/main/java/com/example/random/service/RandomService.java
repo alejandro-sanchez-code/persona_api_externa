@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -28,17 +29,46 @@ public class RandomService {
     @Autowired
     private ResultRepository resultRepository;
 
-    public Random obtener(){
-        ResponseEntity<Random> response = restTemplate
-                .exchange("https://randomuser.me/api",
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<Random>() {
-                        });
-        return response.getBody();
+    public ResultResponse obtener() {
+        // 1. Consumir la API externa
+        ResponseEntity<Random> response = restTemplate.exchange(
+                "https://randomuser.me/api",
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<Random>() {}
+        );
+
+        Random random = response.getBody();
+
+        // 2. Mapear a ResultResponse (igual que hacías en el controlador)
+        Results r = random.getResults().get(0); // asumo que trae al menos 1
+        ResultResponse resultResponse = new ResultResponse();
+
+        resultResponse.setDni(UUID.randomUUID().toString());
+        resultResponse.setGenero(r.getGender());
+        resultResponse.setCelular(r.getCell());
+        resultResponse.setEmail(r.getEmail());
+        resultResponse.setTelefono(r.getPhone());
+        resultResponse.setNat(r.getNat());
+        resultResponse.setNombre(r.getName().getTitle() + " " + r.getName().getFirst());
+        resultResponse.setCiudadYPais(r.getLocation().getStreet().getName()
+                + " " + r.getLocation().getStreet().getNumber()
+                + ", " + r.getLocation().getCity()
+                + ", " + r.getLocation().getCountry());
+        resultResponse.setDireccion(r.getLocation().getStreet().getName());
+        resultResponse.setCodigoPostal(r.getLocation().getPostcode());
+        resultResponse.setUsername(r.getLogin().getUsername());
+        resultResponse.setClave(r.getLogin().getPassword());
+        resultResponse.setZonaHoraria(r.getLocation().getTimezone().getOffset()
+                + " || " + r.getLocation().getTimezone().getDescription());
+        resultResponse.setEdad(r.getDob().getAge());
+
+        // 3. Guardar en BD
+        return resultRepository.save(resultResponse);
     }
 
-    public ResultResponse guardar(ResultResponse resultResponse){
+
+    public ResultResponse guardar(ResultResponse resultResponse) {
         return resultRepository.save(resultResponse);
     }
 
