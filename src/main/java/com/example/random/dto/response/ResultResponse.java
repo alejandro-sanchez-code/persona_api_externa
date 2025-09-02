@@ -11,6 +11,7 @@ public class ResultResponse {
     @Id
     private String id;
 
+    private String dni;
     private String nombre;
     private String genero;
     private String telefono;
@@ -24,6 +25,14 @@ public class ResultResponse {
     private String clave;
     private String zonaHoraria;
     private String nat;
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
     public Integer getEdad() {
         return edad;
